@@ -1,2 +1,30 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+    import Header from "$lib/components/Header.svelte";
+</script>
+
+<Header />
+<section class="bg-gradient-to-r from-green-50 to-white rounded-xl p-8 shadow-sm">
+    <h2 class="text-2xl font-bold mb-3">Bienvenue au Village Numérique Résistant</h2>
+    <p class="mb-4">Découvre comment ton établissement peut réduire sa dépendance aux Big Tech, réparer et réemployer le matériel, et adopter des solutions libres et durables.</p>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 bg-white rounded-lg shadow">
+            <h3 class="font-semibold">Parcours</h3>
+            <p class="text-sm text-gray-600">Testez le diagnostic de dépendance et suivez un plan d'action.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg shadow">
+            <h3 class="font-semibold">Ressources</h3>
+            <p class="text-sm text-gray-600">Logiciels libres, guides de réemploi, et tutoriels Linux.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg shadow">
+            <h3 class="font-semibold">Communauté</h3>
+            <p class="text-sm text-gray-600">Contribue, partage ton projet, rejoins la forge des communs.</p>
+        </div>
+    </div>
+
+
+    <div class="min-h-screen bg-pink-500">
+        fuck zaza
+    </div>
+</section>
