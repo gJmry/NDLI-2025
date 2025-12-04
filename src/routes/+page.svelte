@@ -22,9 +22,4 @@
             <p class="text-sm text-gray-600">Contribue, partage ton projet, rejoins la forge des communs.</p>
         </div>
     </div>
-
-
-    <div class="min-h-screen bg-pink-500">
-        fuck zaza
-    </div>
 </section>
