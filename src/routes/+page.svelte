@@ -4,7 +4,7 @@
     import IntroLogo from "$lib/components/IntroLogo.svelte";
 </script>
 
-<!-- <IntroLogo />  a remettre-->
+<IntroLogo />
 
  <Header />
 <section class="relative bg-gradient-to-br from-stone-800 via-amber-950 to-stone-900 text-amber-50 py-20 overflow-hidden">
