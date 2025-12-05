@@ -22,7 +22,7 @@
 
         const data = await response.json();
 
-        await new Promise((r) => setTimeout(r, 600));
+        await new Promise((r) => setTimeout(r, 400));
 
         thinking = false;
 
@@ -70,7 +70,10 @@
                 bind:value={message}
                 placeholder="Tape ton message..."
                 class="grow bg-[#021f02] text-green-300 border border-green-700 px-3 py-2 outline-none font-mono text-sm
-                       focus:border-green-400 rounded-l"
+                    focus:border-green-400 rounded-l"
+                on:keydown={(e) => {
+                    if (e.key === "Enter") sendMessage();
+                }}
             />
 
             <button
