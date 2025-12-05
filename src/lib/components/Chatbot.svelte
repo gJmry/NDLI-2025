@@ -45,8 +45,9 @@
                 <button class="text-green-300 font-bold absolute right-0 top-0" on:click={toggleChat}>✕</button>
             </div>
 
+            <hr class="border-green-700 mb-2 mt-8" />
             
-            <div class="h-80 overflow-y-auto mt-1 p-2 space-y-1">
+            <div class="h-80 pt-6 overflow-y-auto mt-1 p-2 space-y-1">
                 {#each messages as msg}
                     <ChatBubble text={msg.text} sender={msg.sender} />
                 {/each}
