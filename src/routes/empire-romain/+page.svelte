@@ -144,7 +144,7 @@
                 <div class="game-over">
                     {message} <br />
                     <button class="btn pixel-btn" on:click={restart}>RECOMMENCER</button>
-                    <a class="btn pixel-btn" href="/">CONTINUER</a>
+                    <a class="btn pixel-btn" href="/village">CONTINUER</a>
                 </div>
             {/if}
         </div>
