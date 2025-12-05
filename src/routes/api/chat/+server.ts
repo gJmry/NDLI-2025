@@ -20,7 +20,7 @@ export async function POST({ request }: { request: Request }) {
 
         const responseMessage = await generateGroqResponse(finalPrompt);
 
-        return json({ content: responseMessage });
+        return json({ responseMessage: responseMessage });
     } catch (error) {
         console.error("Erreur dans l'endpoint POST:", error);
         return json(
