@@ -1,53 +1,59 @@
 <script>
     import village from '$lib/assets/village-gaulois.webp';
+  import Chatbot from '$lib/components/Chatbot.svelte';
     import TooltipDot from "$lib/components/TooltipDot.svelte";
 
+    const originalWidth = 1600; 
+    const originalHeight = 900; 
+
     let tooltipDots = [
-        {
-            id: 1,
-            title: "Jeu n°1 - Libre ou pas libre",
-            desc: "Ceci est le premier jeu !",
-            route: "libre-ou-pas-libre",
-            x: 990,
-            y: 210
-        },
-        {
-            id: 2,
-            title: "Jeu n°2 - Attrape le menhir",
-            desc: "Ceci est le deuxième jeu !",
-            route: "attrape-le-menhir",
-            x: 830,
-            y: 560
-        },
-        {
-            id: 3,
-            title: "Jeu n°3 - Empire romain",
-            desc: "Ceci est le troisième jeu !",
-            route: "empire-romain",
-            x: 420,
-            y: 460
-        },
-        {
-            id: 4,
-            title: "Jeu n°4 - Quiz",
-            desc: "Ceci est le quatrième jeu !",
-            route: "quiz",
-            x: 1365,
-            y: 520
-        }
+        { id: 1, title: "Jeu n°1 - Libre ou pas libre", desc: "Ceci est le premier jeu !", route: "libre-ou-pas-libre", x: 410, y: 310 },
+        { id: 2, title: "Jeu n°2 - Attrape le menhir", desc: "Ceci est le deuxième jeu !", route: "attrape-le-menhir", x: 250, y: 270 },
+        { id: 3, title: "Jeu n°3 - Empire romain", desc: "Ceci est le troisième jeu !", route: "empire-romain", x: 590, y: 160 },
+        { id: 4, title: "Jeu n°4 - Quiz", desc: "Ceci est le quatrième jeu !", route: "quiz", x: 780, y: 210 }
     ];
+
+    tooltipDots = tooltipDots.map(dot => ({
+        ...dot,
+        xPercent: (dot.x / originalWidth) * 100,
+        yPercent: (dot.y / originalHeight) * 100
+    }));
 </script>
 
-<main class="relative flex justify-center w-full">
-    <img src="{village}" alt="Village gaulois" class="h-screen"/>
+<main class="flex justify-center items-center w-full min-h-screen
+             bg-gradient-to-br from-[#031d03] via-[#041f04] to-[#032203]
+             relative overflow-hidden">
+             
+    <!-- Effet de scanlines sur tout le fond -->
+    <div class="absolute inset-0 pointer-events-none opacity-20"
+         style="background: repeating-linear-gradient(
+             to bottom,
+             rgba(0,255,0,0.02) 0px,
+             rgba(0,255,0,0.02) 2px,
+             transparent 3px,
+             transparent 6px
+         );">
+    </div>
 
-    {#each tooltipDots as dot}
-        <TooltipDot
-                title="{dot.title}"
-                desc="{dot.desc}"
-                route="{dot.route}"
-                x={dot.x}
-                y={dot.y}
-        />
-    {/each}
+    <!-- Cadre de l'image -->
+    <div class="relative w-full max-w-[1000px] aspect-video 
+                border-8 border-[#8B4513] 
+                shadow-xl 
+                bg-[#A0522D] overflow-hidden">
+        <img src="{village}" alt="Village gaulois" class="w-full h-full object-contain" />
+
+        {#each tooltipDots as dot}
+            <TooltipDot
+                title={dot.title}
+                desc={dot.desc}
+                route={dot.route}
+                xPercent={dot.x}
+                yPercent={dot.y}
+                style="position: absolute; left: {dot.x}%; top: {dot.y}%; transform: translate(-50%, -50%);"
+            />
+        {/each}
+    </div>
+
+
+    <Chatbot />
 </main>
