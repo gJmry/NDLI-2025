@@ -4,6 +4,7 @@
     let message = "";
     let messages: { text: string; sender: "user" | "bot" }[] = [];
     let thinking = false;
+    let open = false; 
 
     async function sendMessage() {
         if (!message.trim()) return;
@@ -28,61 +29,53 @@
 
         messages = [...messages, { text: data.responseMessage, sender: "bot" }];
     }
+
+    function toggleChat() {
+        open = !open;
+    }
 </script>
 
-<header class="w-full min-h-screen flex items-center justify-center text-green-300 font-mono relative overflow-hidden">
+<div class="fixed bottom-4 right-4 z-50 flex flex-col items-end space-y-2">
+    {#if open}
+        <div class="w-96 rounded-lg border border-green-500 bg-[#032a03] shadow-xl p-2 relative z-10">
+            <div class="relative mb-1">
+                <h1 class="text-green-400 tracking-widest uppercase text-sm font-bold absolute left-1/2 -translate-x-1/2">
+                    Chat d'assistance
+                </h1>
+                <button class="text-green-300 font-bold absolute right-0 top-0" on:click={toggleChat}>✕</button>
+            </div>
 
-    <!-- Scanlines -->
-    <div class="absolute inset-0 pointer-events-none opacity-20"
-         style="background: repeating-linear-gradient(
-             to bottom,
-             rgba(0,0,0,0.1) 0px,
-             rgba(0,0,0,0.1) 2px,
-             transparent 3px,
-             transparent 6px
-         );">
-    </div>
+            
+            <div class="h-80 overflow-y-auto mt-1 p-2 space-y-1">
+                {#each messages as msg}
+                    <ChatBubble text={msg.text} sender={msg.sender} />
+                {/each}
 
-    <div class="w-96 rounded-lg border border-green-500 bg-[#032a03] shadow-xl p-2 relative z-10">
+                {#if thinking}
+                    <div class="mr-auto mt-1 px-3 py-2 rounded bg-green-900 text-green-400 border border-green-700 max-w-[40%] font-mono text-sm">
+                        <span class="inline-flex space-x-1 animate-pulse">
+                            <span>.</span><span>.</span><span>.</span>
+                        </span>
+                    </div>
+                {/if}
+            </div>
 
-        <h1 class="text-center text-green-400 pb-2 border-b border-green-700 tracking-widest uppercase text-sm">
-            Retro Chat Terminal
-        </h1>
-
-        <!-- Messages -->
-        <div class="h-80 overflow-y-auto mt-2 p-2 space-y-1">
-            {#each messages as msg}
-                <ChatBubble text={msg.text} sender={msg.sender} />
-            {/each}
-
-            {#if thinking}
-                <div class="mr-auto mt-1 px-3 py-2 rounded bg-green-900 text-green-400 border border-green-700 max-w-[40%] font-mono text-sm">
-                    <span class="inline-flex space-x-1 animate-pulse">
-                        <span>.</span><span>.</span><span>.</span>
-                    </span>
-                </div>
-            {/if}
+            <div class="border-t border-green-700 mt-2 pt-2 flex">
+                <input
+                    type="text"
+                    bind:value={message}
+                    placeholder="Tape ton message..."
+                    class="grow bg-[#021f02] text-green-300 border border-green-700 px-3 py-2 outline-none font-mono text-sm focus:border-green-400 rounded-l"
+                    on:keydown={(e) => { if(e.key === 'Enter') sendMessage(); }}
+                />
+                <button on:click={sendMessage} class="bg-green-700 text-green-200 px-4 py-2 border border-green-600 rounded-r hover:bg-green-600 active:bg-green-500 transition font-mono">
+                    Envoyer
+                </button>
+            </div>
         </div>
-
-        <div class="border-t border-green-700 mt-2 pt-2 flex">
-            <input
-                type="text"
-                bind:value={message}
-                placeholder="Tape ton message..."
-                class="grow bg-[#021f02] text-green-300 border border-green-700 px-3 py-2 outline-none font-mono text-sm
-                    focus:border-green-400 rounded-l"
-                on:keydown={(e) => {
-                    if (e.key === "Enter") sendMessage();
-                }}
-            />
-
-            <button
-                on:click={sendMessage}
-                class="bg-green-700 text-green-200 px-4 py-2 border border-green-600 rounded-r
-                       hover:bg-green-600 active:bg-green-500 transition font-mono"
-            >
-                Envoyer
-            </button>
-        </div>
-    </div>
-</header>
+    {:else}
+        <button on:click={toggleChat} class="bg-green-700 hover:bg-green-800 text-green-50 rounded-full w-14 h-14 flex items-center justify-center shadow-lg text-2xl font-mono">
+            ?
+        </button>
+    {/if}
+</div>
