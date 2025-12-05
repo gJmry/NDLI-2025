@@ -1,6 +1,5 @@
 <script>
     import village from '$lib/assets/village-gaulois.webp';
-  import Chatbot from '$lib/components/Chatbot.svelte';
     import TooltipDot from "$lib/components/TooltipDot.svelte";
 
     const originalWidth = 1600; 
@@ -58,7 +57,4 @@
             />
         {/each}
     </div>
-
-
-    <Chatbot />
 </main>
