@@ -1,10 +1,12 @@
 <script lang="ts">
     import ChatBubble from "./ChatBubble.svelte";
+    import { afterUpdate } from "svelte";
 
     let message = "";
     let messages: { text: string; sender: "user" | "bot" }[] = [];
     let thinking = false;
     let open = false; 
+    let messagesContainer: HTMLDivElement;
 
     async function sendMessage() {
         if (!message.trim()) return;
@@ -33,6 +35,12 @@
     function toggleChat() {
         open = !open;
     }
+
+    afterUpdate(() => {
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    });
 </script>
 
 <div class="fixed bottom-4 right-4 z-50 flex flex-col items-end space-y-2">
@@ -47,7 +55,7 @@
 
             <hr class="border-green-700 mb-2 mt-8" />
             
-            <div class="h-80 pt-6 overflow-y-auto mt-1 p-2 space-y-1">
+            <div bind:this={messagesContainer} class="h-80 overflow-y-auto mt-1 p-2 space-y-1">
                 {#each messages as msg}
                     <ChatBubble text={msg.text} sender={msg.sender} />
                 {/each}
