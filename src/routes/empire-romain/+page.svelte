@@ -19,8 +19,9 @@
 
     let gameOver = false;
     let message = "";
-    let time = 0; // temps écoulé
+    let time = 0;
     let timerInterval: NodeJS.Timer;
+    let showIntro = true;
 
     function random(min: number, max: number) {
         return Math.random() * (max - min) + min;
@@ -53,7 +54,7 @@
     }
 
     function update() {
-        if (gameOver) return;
+        if (gameOver || showIntro) return;
 
         emojis.forEach(e => {
             e.x += e.vx;
@@ -68,6 +69,15 @@
     }
 
     function handleStageClick(evt: MouseEvent) {
+        if (showIntro) {
+            showIntro = false;
+            update();
+            timerInterval = setInterval(() => {
+                if (!gameOver) time += 0.01;
+            }, 10);
+            return;
+        }
+
         const stageEl = evt.currentTarget as HTMLElement;
         const rectStage = stageEl.getBoundingClientRect();
         const mx = evt.clientX - rectStage.left;
@@ -94,22 +104,13 @@
         gameOver = false;
         message = "";
         time = 0;
+        showIntro = true;
         initEmojis();
-        update();
-
         clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            if (!gameOver) time += 0.01;
-        }, 10);
     }
 
     onMount(() => {
         initEmojis();
-        update();
-
-        timerInterval = setInterval(() => {
-            if (!gameOver) time += 0.01;
-        }, 10);
     });
 </script>
 
@@ -120,6 +121,14 @@
             <div class="hud-center">Mini-jeu — Trouve Windows !</div>
             <div class="hud-right">Temps: {time.toFixed(2)}s</div>
         </div>
+
+        {#if showIntro}
+            <div class="intro-popup">
+                Bienvenue dans la hutte Linux ! Ici, on prône la liberté numérique.
+                Accomplis ce défi pour protéger le village de l’empire romain.
+                Trouve le Logo Windows et intercepte le !
+            </div>
+        {/if}
 
         <div class="stage" on:click={handleStageClick}>
             {#each emojis as e (e.id)}
@@ -146,6 +155,24 @@
 
 
 <style>
+    .intro-popup {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 450px;
+        padding: 20px;
+        background: radial-gradient(circle at top left, #111 0%, #001b00 100%);
+        border: 4px solid #0b5b2b;
+        border-radius: 12px;
+        box-shadow: 0 0 20px #00adef, 0 0 40px rgba(0,173,239,0.3);
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        color: #bfe8a6;
+        text-shadow: 1px 1px 0 #000;
+        z-index: 100;
+    }
     .pixel-wrap {
         position: relative;
         min-height: 100vh;
@@ -193,10 +220,6 @@
         cursor: pointer;
         transition: transform .08s steps(1);
         filter: drop-shadow(1px 1px 0 #000);
-    }
-
-    .emoji:hover {
-        transform: scale(1.3);
     }
 
     .game-over {
@@ -250,5 +273,11 @@
     .hud-right {
         font-weight: 700;
         color: #bfe8a6;
+    }
+    .intro-windows {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle; /* aligne avec le texte */
+        margin: 0 4px; /* espace autour de l'image */
     }
 </style>
