@@ -21,10 +21,9 @@
 </script>
 
 <main class="flex justify-center items-center w-full min-h-screen
-             bg-gradient-to-br from-[#031d03] via-[#041f04] to-[#032203]
+             bg-linear-to-br from-[#031d03] via-[#041f04] to-[#032203]
              relative overflow-hidden">
              
-    <!-- Effet de scanlines sur tout le fond -->
     <div class="absolute inset-0 pointer-events-none opacity-20"
          style="background: repeating-linear-gradient(
              to bottom,
@@ -34,6 +33,12 @@
              transparent 6px
          );">
     </div>
+
+    <h1 class="absolute top-7 text-4xl md:text-5xl font-extrabold text-white 
+               bg-green-900 bg-opacity-70 px-6 py-3 rounded-lg 
+               border-4 border-green-500 shadow-lg z-10">
+        Bienvenue au Village Gaulois !
+    </h1>
 
     <!-- Cadre de l'image -->
     <div class="relative w-full max-w-[1000px] aspect-video 
