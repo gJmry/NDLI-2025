@@ -10,7 +10,7 @@
 <div style="position: absolute; top:{yPercent}px; left:{xPercent}px;">
     <div class="wrapper relative w-lg">
         <a href="http://localhost:5173/{route}">
-            <img class="w-12" src="/src/lib/assets/3d-shield.png" alt="Bouclier gaulois">
+            <img class="w-12" src="static/village/3d-shield.png" alt="Bouclier gaulois">
         </a>
 
         <div class="tooltip absolute bottom-5 bg-green-300 hidden">

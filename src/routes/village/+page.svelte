@@ -57,4 +57,12 @@
             />
         {/each}
     </div>
+
+    <a href="/" class="absolute bottom-7 left-[5%] text-lg md:text-xl font-semibold 
+                      text-white bg-green-900 bg-opacity-70 
+                      px-5 py-2 rounded-lg 
+                      border-4 border-green-500 shadow-lg z-10 
+                      hover:bg-green-800 transition">
+        Retour à l'accueil
+    </a>
 </main>
