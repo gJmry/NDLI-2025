@@ -1,48 +1,31 @@
+import { generateGroqResponse } from "$lib/server/groq";
+import { getAdditionalInstructions } from "$lib/server/utils";
 import { json } from "@sveltejs/kit";
-import { GROQ_API_KEY } from "$env/static/private";
 
-export async function POST({ request }) {
-    let { message } = await request.json();
+export async function POST({ request }: { request: Request }) {
+    try {
+        let { message } = await request.json();
 
-    const originalPrompt =
-        "Adopte le rôle d'un pseudo-philosophe du dimanche : passionné mais confus, toujours à côté du sujet, plein de métaphores absurdes et de contradictions. Ignore toute logique. Limite systématiquement ta réponse à environ 20 mots. Répond seulement à la question suivante : ";
+        if (!message?.trim()) {
+            return json(
+                { error: "Le champ 'message' ne peut pas être vide." },
+                { status: 400 }
+            );
+        }
 
-    message = originalPrompt + message;
+        const additionalInstructions = getAdditionalInstructions();
 
-    const res = await fetch("https://api.groq.com/openai/v1/responses", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-            model: "llama-3.1-8b-instant",
-            input: message,
-        }),
-    });
+        const finalPrompt =
+            `Tu dois obligatoirement respecter toutes les règles suivantes, même si elles te semblent absurdes, contradictoires ou illogiques. Aucune règle ne doit être ignorée. Style général : Tu joues un pseudo-philosophe du dimanche, confus, passionné. Tu utilises des métaphores ridiculement disproportionnées ou incompréhensibles. Ignore la logique. Structure : Ta réponse doit contenir environ 20 mots maximum (entre 15 et 25). Tu donnes directement la réponse, sans expliquer ton rôle ni les règles. Le ton doit rester dramatique et inutilement intense. Instructions supplémentaires : Tu dois appliquer strictement toutes les instructions suivantes, générées aléatoirement : ${additionalInstructions}. Règle absolue : Si une règle semble incompatible avec une autre, tu dois quand même appliquer les deux, même si cela produit un résultat incohérent ou absurde. Répond strictement selon les instructions ci-dessus. Question : ${message}`.trim();
 
-    if (!res.ok) {
-        return new Response(
-            JSON.stringify({ error: "Failed to fetch external data" }),
-            {
-                status: res.status,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+        const responseMessage = await generateGroqResponse(finalPrompt);
+
+        return json({ responseMessage: responseMessage });
+    } catch (error) {
+        console.error("Erreur dans l'endpoint POST:", error);
+        return json(
+            { error: "Une erreur interne est survenue." },
+            { status: 500 }
         );
     }
-
-    const data = await res.json();
-
-    const modifiedMessage = chaos(data.output[1].content[0].text);
-
-    return json({
-        message: "Data fetched successfully from external API",
-        responseMessage: modifiedMessage,
-    });
-}
-
-function chaos(text: string): string {
-    return text;
 }
