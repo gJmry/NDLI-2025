@@ -170,7 +170,7 @@
                 </div>
                 <div class="controls">
                     <button class="btn pixel-btn" on:click={restartPhase1}>RECOMMENCER</button>
-                    <a class="btn pixel-btn" href="./">CONTINUER</a>
+                    <a class="btn pixel-btn" href="/village">CONTINUER</a>
                 </div>
             {/if}
         </div>

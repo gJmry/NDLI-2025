@@ -196,7 +196,7 @@
                     <div class="end-score">Score final : {score}/15</div>
                     <div class="controls">
                         <button class="btn pixel-btn" on:click={restart}>REJOUER</button>
-                        <a class="btn pixel-btn" href="./">RETOUR</a>
+                        <a class="btn pixel-btn" href="/village">RETOUR</a>
                     </div>
                 </div>
             {/if}
@@ -209,7 +209,7 @@
                     <div class="end-score">Score parfait : {score}/15</div>
                     <div class="controls">
                         <button class="btn pixel-btn" on:click={restart}>REJOUER</button>
-                        <a class="btn pixel-btn" href="./">CONTINUER</a>
+                        <a class="btn pixel-btn" href="/village">CONTINUER</a>
                     </div>
                 </div>
             {/if}

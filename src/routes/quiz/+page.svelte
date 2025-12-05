@@ -137,7 +137,7 @@
                 </div>
             {:else}
                 {#if quizCompleted}
-                    <div class="quiz-completed items-center justify-center gap-4 p-6 bg-gradient-to-br from-green-900 to-green-800 border-4 border-green-700 rounded-xl shadow-lg text-center max-w-md mx-auto">
+                    <div class="quiz-completed items-center justify-center gap-4 p-6 bg-linear-to-br from-green-900 to-green-800 border-4 border-green-700 rounded-xl shadow-lg text-center max-w-md mx-auto">
                         <div class="text-3xl text-yellow-400 font-extrabold drop-shadow-lg">🎉 Bravo !</div>
                         <div class="text-lg text-cyan-400 font-bold">
                             Tu as terminé le quiz avec un score de <span class="text-white">{score}
@@ -146,11 +146,11 @@
                         </div>
                         <button
                                 on:click={() => restartQuiz()}
-                           class="cursor-pointer mt-4 px-6 py-2 bg-gradient-to-b from-green-700 to-green-900 border-2 border-black rounded-lg shadow hover:scale-105 transition-transform font-extrabold text-white">
+                           class="cursor-pointer mt-4 px-6 py-2 bg-linear-to-b from-green-700 to-green-900 border-2 border-black rounded-lg shadow hover:scale-105 transition-transform font-extrabold text-white">
                             RECOMMENCER
                         </button>
-                        <a href="/"
-                           class="mt-4 px-6 py-2 bg-gradient-to-b from-green-700 to-green-900 border-2 border-black rounded-lg shadow hover:scale-105 transition-transform font-extrabold text-white">
+                        <a href="/village"
+                           class="mt-4 px-6 py-2 bg-linear-to-b from-green-700 to-green-900 border-2 border-black rounded-lg shadow hover:scale-105 transition-transform font-extrabold text-white">
                             CONTINUER
                         </a>
                     </div>
