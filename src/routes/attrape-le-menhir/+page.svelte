@@ -11,6 +11,7 @@
         speed: number;
     };
 
+    let showIntro = true;
     let items: FallingItem[] = [];
     let score = 0;
     let lives = 3;
@@ -22,6 +23,11 @@
     let obelixRunning = true;
     let crashed = false;
     let showInfo: { name: string; lore: string } | null = null;
+
+    function startGame() {
+        showIntro = false;
+        // Là tu lances tes timers, spawn, et ton jeu normalement
+    }
 
     const itemTypes = [
         { type: 'cable', repairable: true, emoji: '🔌', name: 'Câble USB', lore: 'Réparable ! Les câbles peuvent être ressoudés, les connecteurs changés. Favorise la réparabilité pour prolonger la durée de vie du matériel.' },
@@ -35,7 +41,7 @@
     ];
 
     function spawnItem() {
-        if (gameOver || gameWon) return;
+        if (gameOver || gameWon || showIntro) return;
         const item = itemTypes[Math.floor(Math.random() * itemTypes.length)];
         items = [...items, {
             id: itemId++,
@@ -49,7 +55,7 @@
     }
 
     function moveItems() {
-        if (gameOver || gameWon) return;
+        if (gameOver || gameWon || showIntro) return;
         items = items.map(item => ({
             ...item,
             y: item.y + item.speed
@@ -126,9 +132,38 @@
 
 <div class="pixel-wrap">
     <div class="crt">
+        {#if showIntro}
+    <div class="fixed inset-0 bg-black/80 text-white flex flex-col items-center justify-center z-50 p-6">
+        <h1 class="text-4xl font-bold mb-6">Bienvenue dans la Chasse aux Objets du Village NIRD</h1>
+
+        <p class="max-w-xl text-center mb-6 text-lg">
+            Obélix doit aider le village à réduire sa dépendance aux Big Tech.  
+            Attrape les objets **réparables**, évite les déchets des romains,  
+            et deviens un vrai résistant gaulois libre !
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+            {#each itemTypes as item}
+                <div class="bg-white/10 p-4 rounded-lg text-center">
+                    <div class="text-4xl mb-2">{item.emoji}</div>
+                    <div class="font-semibold">{item.name}</div>
+                    <div class="text-sm opacity-80">{item.lore}</div>
+                </div>
+            {/each}
+        </div>
+
+        <button 
+            on:click={startGame}
+            class="bg-yellow-400 text-black px-6 py-3 rounded-lg text-xl font-bold hover:bg-yellow-300 transition"
+        >
+            Commencer l'aventure
+        </button>
+    </div>
+{/if}
+
         <div class="hud">
             <div class="hud-left">MENHIR NUMÉRIQUE</div>
-            <div class="hud-center">Attrape les objets numériques !</div>
+            <div class="hud-center">Attrape les objets réparables !</div>
             <div class="hud-right">
                 <span>Score: {score}/15</span>
                 <span>❤️ {lives}</span>
@@ -179,10 +214,10 @@
                 </div>
             {/if}
 
-            {#if !gameOver && !gameWon}
+            {#if !gameOver && !gameWon && !showIntro}
                 <div class="instructions">
                     Clique sur les objets numériques 🔧<br>
-                    Évite les trucs romains 🏛️
+                    Évite les déchets romains 🏛️
                 </div>
             {/if}
         </div>
