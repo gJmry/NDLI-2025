@@ -9,7 +9,7 @@
 
 <div style="position: absolute; top:{yPercent}px; left:{xPercent}px;">
     <div class="wrapper relative w-lg">
-        <a href="http://localhost:5173/{route}">
+        <a href="/{route}">
             <img class="w-12" src="/village/3d-shield.png" alt="Bouclier gaulois">
         </a>
 
