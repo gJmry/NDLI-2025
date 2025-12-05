@@ -1,8 +1,10 @@
 <script>
     import Chatbot from "$lib/components/Chatbot.svelte";
     import Header from "$lib/components/Header.svelte";
+    import IntroLogo from "$lib/components/IntroLogo.svelte";
 </script>
 
+<!-- <IntroLogo />  a remettre-->
 <Header />
 <section
     class="bg-gradient-to-r from-green-50 to-white rounded-xl p-8 shadow-sm"
