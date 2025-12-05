@@ -3,7 +3,7 @@
     import { afterUpdate } from "svelte";
 
     let message = "";
-    let messages: { text: string; sender: "user" | "bot" }[] = [];
+    let messages: { text: string; sender: "user" | "bot" }[] = [{text: "Bonjour ! Comment puis-je t'aider aujourd'hui ?", sender: "bot"}];
     let thinking = false;
     let open = false; 
     let messagesContainer: HTMLDivElement;
@@ -88,3 +88,29 @@
         </button>
     {/if}
 </div>
+<style>
+div::-webkit-scrollbar {
+    width: 8px; 
+}
+
+div::-webkit-scrollbar-track {
+    background: #021f02; 
+    border-radius: 4px;
+}
+
+div::-webkit-scrollbar-thumb {
+    background-color: #0f5a0f; 
+    border-radius: 4px;
+    border: 2px solid #032a03; 
+}
+
+div::-webkit-scrollbar-thumb:hover {
+    background-color: #16a116; 
+}
+
+div {
+    scrollbar-width: thin;
+    scrollbar-color: #0f5a0f #021f02;
+}
+
+</style>
